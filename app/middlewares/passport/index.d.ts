@@ -1,0 +1,1 @@
+export declare function passport(app: any, options: any): any

@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "allowJs": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": "./",
+    "noEmit": true,
+    "types": [
+      "node",
+      "koa-bodyparser",
+    ],
+    "lib": [
+      "esnext",
+      "scripthost"
+    ],
+    "paths": {
+      "@/*": [
+        "app/*"
+      ],
+    }
+  },
+  "include": [
+    "index.ts",
+    "app/**/*.ts",
+    "app/**/*.js",
+    "test/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+  ]
+}

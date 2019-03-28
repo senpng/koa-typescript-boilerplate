@@ -1,0 +1,44 @@
+{
+  "name": "koa-typescript-boilerplate",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "export NODE_ENV=production && node -r ts-node/register -r tsconfig-paths/register index.ts",
+    "debug": "export NODE_ENV=development && export DEBUG=koa-typescript-boilerplate:*,typeorm:* && ./node_modules/.bin/nodemon -r ts-node/register -r tsconfig-paths/register --inspect=9229 --watch '**/*' -e ts,js index.ts",
+    "test": "./node_modules/.bin/jest --config test/jest.config.js test/"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-logger": "^3.2.0",
+    "koa-passport": "^4.1.1",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.10.1",
+    "md5": "^2.2.1",
+    "mysql2": "^1.6.5",
+    "pluralize": "^7.0.0",
+    "reflect-metadata": "^0.1.13",
+    "stream-wormhole": "^1.1.0",
+    "typeorm": "^0.2.16",
+    "validator": "^10.11.0"
+  },
+  "devDependencies": {
+    "@types/debug": "^0.0.31",
+    "@types/jest": "^23.3.14",
+    "@types/koa": "^2.0.48",
+    "@types/koa-bodyparser": "^4.2.2",
+    "@types/koa-logger": "^3.1.1",
+    "@types/koa-passport": "^4.0.2",
+    "@types/koa-router": "^7.0.40",
+    "@types/koa-session": "^5.10.0",
+    "@types/md5": "^2.1.33",
+    "@types/node": "^10.14.4",
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.10",
+    "ts-node": "^7.0.1",
+    "tsconfig-paths": "^3.8.0",
+    "tslint": "^5.14.0",
+    "typescript": "^3.3.4"
+  }
+}

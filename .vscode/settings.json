@@ -1,0 +1,12 @@
+{
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+  "tslint.jsEnable": true,
+  "npm.packageManager": "yarn",
+  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+  "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.tslint": true,
+  }
+}
