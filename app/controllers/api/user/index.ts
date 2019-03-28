@@ -7,7 +7,7 @@ export async function self(ctx: Context) {
 
 logout.__method__ = 'PUT'
 export async function logout(ctx: Context) {
-  await ctx.logout()
+  ctx.logout()
   ctx.body = ''
 }
 
