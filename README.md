@@ -8,7 +8,7 @@
 ## Features
 
 * [x] Typescript + Koa2  
-* [x] Auto regist controller to router  
+* [x] Auto register controller to router  
 * [x] Typeorm + MySQL
 
 ## Project Structure
