@@ -20,8 +20,7 @@
     "pluralize": "^7.0.0",
     "reflect-metadata": "^0.1.13",
     "stream-wormhole": "^1.1.0",
-    "typeorm": "^0.2.16",
-    "validator": "^10.11.0"
+    "typeorm": "^0.2.16"
   },
   "devDependencies": {
     "@types/debug": "^0.0.31",
