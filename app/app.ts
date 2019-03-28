@@ -61,10 +61,10 @@ app.use(Middlewares.passport(app, {
     renew: true,
     rolling: false,
   },
-  serializeUserFn: async (user: any, done: any) => {
+  serializeUserFn: async (user, done) => {
     done(null, user.id)
   },
-  deserializeUserFn: async (id: number, done: any) => {
+  deserializeUserFn: async (id, done) => {
     try {
       const user = await UserService.get(id)
       done(null, user)
