@@ -1,6 +1,6 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm'
 
-abstract class Model {
+abstract class Model extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id: number
