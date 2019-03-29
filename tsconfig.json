@@ -15,7 +15,7 @@
     "noEmit": true,
     "types": [
       "node",
-      "koa-bodyparser",
+      "koa-body",
     ],
     "lib": [
       "esnext",

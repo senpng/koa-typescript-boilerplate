@@ -1,6 +1,6 @@
 import http from 'http'
 import Koa from 'koa'
-import bodyparser from 'koa-bodyparser'
+import KoaBody from 'koa-body'
 import logger from 'koa-logger'
 import { createConnection } from 'typeorm'
 import config from './config'
@@ -100,8 +100,8 @@ app.use(async (ctx, next) => {
 })
 
 // body parse
-app.use(bodyparser({
-  formLimit: '1mb',
+app.use(KoaBody({
+  multipart: true,
 }))
 
 // 标准化错误输出
