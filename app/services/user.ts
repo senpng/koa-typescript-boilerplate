@@ -1,4 +1,4 @@
-import User from '@/models/typeorm/entities/user'
+import { User } from '@/models/typeorm/entities'
 
 export default {
   get: async (id: number) => {

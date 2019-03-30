@@ -1,6 +1,6 @@
 import { Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm'
 
-abstract class Model extends BaseEntity {
+export abstract class Model extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id: number
@@ -28,5 +28,3 @@ abstract class Model extends BaseEntity {
   // deletedAt?: Date
 
 }
-
-export default Model
