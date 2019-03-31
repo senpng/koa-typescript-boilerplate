@@ -17,7 +17,7 @@ exports = module.exports = function(options) {
   if (typeof options === 'string') {
     options = { root: options }
   } else if (!options || !options.root) {
-    throw new Error('`root` config required.')
+    throw Error('`root` config required.')
   }
 
   const router = Router(options)
