@@ -1,7 +1,10 @@
 import http from 'http'
 import Koa from 'koa'
+import koaLogger from 'koa-logger'
+import KoaCompress from 'koa-compress'
 import KoaBody from 'koa-body'
-import logger from 'koa-logger'
+// import KoaMount from 'koa-mount'
+import KoaStatic from 'koa-static'
 import { createConnection } from 'typeorm'
 import config from './config'
 import * as Middlewares from './middlewares'
@@ -14,9 +17,9 @@ if (process.env.NODE_ENV) {
   app.env = process.env.NODE_ENV
 }
 
-app.use(logger())
+app.use(koaLogger())
 
-// 处理跨域
+// Processing cross-domain
 app.use(async (ctx, next) => {
 
   const requestOrigin = ctx.get('Origin')
@@ -74,7 +77,7 @@ app.use(Middlewares.passport(app, {
   },
 }))
 
-// 接口权限控制
+// Simple interface permission control
 app.use(async (ctx, next) => {
   const authPath = [/^\/api\/user\/(?!logout)/]// 黑名单，需要登录权限
   let needAuth = false
@@ -99,12 +102,15 @@ app.use(async (ctx, next) => {
   ctx.throw(403, '请登录')
 })
 
+// Compress
+app.use(KoaCompress())
+
 // body parse
 app.use(KoaBody({
   multipart: true,
 }))
 
-// 标准化错误输出
+// Standardized error output
 app.context.onerror = function(err: any) {
   if (err == null) { return }
 
@@ -133,7 +139,13 @@ app.context.onerror = function(err: any) {
   this.res.end(JSON.stringify(this.body))
 }
 
-// 注入routers
+// Injecting routers
 app.use(Middlewares.router(__dirname + '/controllers'))
+
+// Static resource access
+app.use(KoaStatic('public'))
+
+// Mount docs
+// app.use(KoaMount('/docs', KoaStatic('docs')))
 
 export default app
