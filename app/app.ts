@@ -143,7 +143,7 @@ app.context.onerror = function(err: any) {
 app.use(Middlewares.router(__dirname + '/controllers'))
 
 // Static resource access
-app.use(KoaStatic('public'))
+app.use(KoaStatic(__dirname + '/public'))
 
 // Mount docs
 // app.use(KoaMount('/docs', KoaStatic('docs')))
