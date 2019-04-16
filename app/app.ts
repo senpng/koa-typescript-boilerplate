@@ -50,6 +50,14 @@ createConnection({
     __dirname + '/models/typeorm/entities/*.ts',
   ],
   namingStrategy: new SnakeCaseNamingStrategy(),
+  // extra: {
+  //   typeCast: (field: any, next: any) => {
+  //     if (field.type === 'TIMESTAMP') {
+  //       return new Date(field.string() + 'Z') // can be 'Z' for UTC or an offset in the form '+HH:MM' or '-HH:MM'
+  //     }
+  //     return next()
+  //   },
+  // },
 }).then(async () => {
   // here you can start to work with your entities
   // tslint:disable-next-line: no-console
