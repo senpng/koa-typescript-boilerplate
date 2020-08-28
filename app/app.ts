@@ -148,7 +148,7 @@ app.context.onerror = function(err: any) {
 }
 
 // Injecting routers
-app.use(Middlewares.router(__dirname + '/controllers'))
+app.use(Middlewares.router.registerRoutes(__dirname + '/controllers'))
 
 // Static resource access
 app.use(KoaStatic(__dirname + '/public'))

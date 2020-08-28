@@ -9,11 +9,10 @@ const pluralize = require('pluralize')
 
 /**
  * [_routerVerb 可以注册的方法]
- * delete {作为保留词，推荐使用别称：del}
  */
 const _routerVerb = ['get', 'post', 'put', 'patch', 'head', 'delete']
 
-exports = module.exports = function(options) {
+function registerRoutes(options) {
   if (typeof options === 'string') {
     options = { root: options }
   } else if (!options || !options.root) {
@@ -50,6 +49,10 @@ exports = module.exports = function(options) {
   })
 
   return router.routes()
+}
+
+exports = module.exports = {
+  registerRoutes,
 }
 
 /**

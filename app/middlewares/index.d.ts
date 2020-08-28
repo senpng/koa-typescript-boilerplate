@@ -1,2 +1,7 @@
-export * from './passport'
-export * from './router'
+import passport from './passport'
+import router from './router'
+
+export {
+  passport,
+  router,
+}
