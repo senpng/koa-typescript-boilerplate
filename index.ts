@@ -5,6 +5,8 @@ import Debug from 'debug'
 import app from './app/app'
 
 const debug = Debug('koa-typescript-boilerplate:server')
+// fix vscode DEBUG CONSOLE not display.
+debug.log = console.log.bind(console)
 
 /**
  * Get port from environment and store.

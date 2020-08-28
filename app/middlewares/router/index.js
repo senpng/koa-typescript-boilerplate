@@ -5,6 +5,9 @@ import fs from 'fs'
 import path from 'path'
 import Router from 'koa-router'
 const debug = require('debug')('koa-typescript-boilerplate:router')
+// fix vscode DEBUG CONSOLE not display.
+// tslint:disable-next-line: no-console
+debug.log = console.log.bind(console)
 const pluralize = require('pluralize')
 
 /**
