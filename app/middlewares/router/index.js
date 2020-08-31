@@ -41,21 +41,67 @@ function registerRoutes(options) {
     let pathRegexp = _formatPath(filePath, root)
 
     getRoute(exportFuncs, function(exportFun, ctrlpath) {
-      _setRoute(router, {
-        domain: Domain,
-        method: exportFun.__method__,
-        regular: exportFun.__regular__,
-        routePath: ctrlpath,
-        handler: exportFun,
-      }, options)
+      // support register class
+      if (exportFun.toString().slice(0, 5) === 'class') {
+        let clazz = exportFun
+        let obj = new clazz()
+        let className = obj.constructor.name.toLowerCase().replace('controller', '')
+        let _pathRegexp = pathRegexp.toLowerCase().replace('_controller', '') // maybe xxx_controller
+        _pathRegexp = _pathRegexp.toLowerCase().replace('controller', '') // maybe xxxController、XxxController
+        let exportFuncs = Object.getOwnPropertyNames(Object.getPrototypeOf(obj))
+          .filter((v) => v !== 'constructor')
+          .reduce((v, cur) => { v[cur] = obj[cur]; return v }, {})
+        getRoute(exportFuncs, function(exportFun, ctrlpath) {
+          _setRoute(router, {
+            domain: Domain,
+            method: exportFun.__method__,
+            regular: exportFun.__regular__,
+            routePath: ctrlpath,
+            handler: exportFun.bind(obj),
+          }, options)
+        }, [_pathRegexp, className])
+      } else {
+        _setRoute(router, {
+          domain: Domain,
+          method: exportFun.__method__,
+          regular: exportFun.__regular__,
+          routePath: ctrlpath,
+          handler: exportFun,
+        }, options)
+      }
     }, [pathRegexp])
   })
 
   return router.routes()
 }
 
+function RouterConfig(options) {
+  return function(target, propertyKey) {
+    let _options = {
+      method: ['GET', 'POST'],
+    }
+    if (typeof options === 'string') {
+      _options.method = [options]
+    } else if (options instanceof Array) {
+      _options.method = options
+    } else if (typeof options.method === 'string') {
+      _options.method = [options.method]
+    } else if (options.method instanceof Array) {
+      _options.method = options.method
+    }
+    _options.method = _options.method.map((method) => method.toLowerCase())
+    _options.regular = options.regular
+
+    target[propertyKey].__method__ = _options.method
+    if (_options.regular) {
+      target[propertyKey].__regular__ = _options.regular
+    }
+  }
+}
+
 exports = module.exports = {
   registerRoutes,
+  Router: RouterConfig,
 }
 
 /**

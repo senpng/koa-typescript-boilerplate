@@ -13,14 +13,6 @@
     "sourceMap": true,
     "baseUrl": "./",
     "noEmit": true,
-    "types": [
-      "node",
-      "koa-body",
-    ],
-    "lib": [
-      "esnext",
-      "scripthost"
-    ],
     "paths": {
       "@/*": [
         "app/*"

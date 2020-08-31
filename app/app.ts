@@ -147,7 +147,7 @@ app.context.onerror = function(err: any) {
   this.res.end(JSON.stringify(this.body))
 }
 
-// Injecting routers
+// Register routers
 app.use(Middlewares.router.registerRoutes(__dirname + '/controllers'))
 
 // Static resource access
