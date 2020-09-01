@@ -1,4 +1,4 @@
 module.exports = {
-  verbose: true,
-  testURL: 'http://localhost/',
-}
+	verbose: true,
+	testURL: 'http://localhost/',
+};

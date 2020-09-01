@@ -11,16 +11,15 @@
   "rules": {
     "semicolon": [
       true,
-      "never"
+      "always"
     ],
     "quotemark": [
       true,
       "single"
     ],
     "indent": [
-      true,
-      "spaces",
-      2
+      "tabs",
+      4
     ],
     "interface-name": false,
     "ordered-imports": false,
@@ -49,7 +48,7 @@
   "jsRules": {
     "semicolon": [
       true,
-      "never"
+      "always"
     ],
     "quotemark": [
       true,
@@ -57,8 +56,8 @@
     ],
     "indent": [
       true,
-      "spaces",
-      2
+      "tabs",
+      4
     ],
     "ordered-imports": false,
     "object-literal-sort-keys": false,

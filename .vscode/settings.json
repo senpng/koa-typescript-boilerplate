@@ -1,6 +1,7 @@
 {
-  "editor.tabSize": 2,
-  "editor.detectIndentation": false,
+  // "editor.detectIndentation": false,
+  "editor.insertSpaces": false,
+  "files.trimTrailingWhitespace": true,
   "editor.formatOnSave": true,
   "tslint.jsEnable": true,
   "npm.packageManager": "yarn",
@@ -8,5 +9,6 @@
   "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.tslint": true,
-  }
+  },
+  "tslint.packageManager": "yarn"
 }

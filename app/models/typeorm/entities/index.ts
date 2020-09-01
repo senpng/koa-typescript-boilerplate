@@ -3,5 +3,5 @@
  * ⚠️: export order
  */
 
-export * from './model'
-export * from './user'
+export * from './model';
+export * from './user';
