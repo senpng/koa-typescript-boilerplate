@@ -1,14 +1,21 @@
 {
   // "editor.detectIndentation": false,
-  "editor.insertSpaces": false,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
   "files.trimTrailingWhitespace": true,
   "editor.formatOnSave": true,
-  "tslint.jsEnable": true,
   "npm.packageManager": "yarn",
   "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
   "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.tslint": true,
+    "source.fixAll.eslint": true,
   },
-  "tslint.packageManager": "yarn"
+  "eslint.packageManager": "yarn",
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
 }

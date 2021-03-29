@@ -18,6 +18,7 @@
       "single"
     ],
     "indent": [
+      true,
       "tabs",
       4
     ],

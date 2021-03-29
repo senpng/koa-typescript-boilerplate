@@ -1,11 +1,11 @@
-import { User } from '@/models/typeorm/entities'
+import {User} from '@/models/typeorm/entities';
 
 export default {
   get: async (id: number) => {
-    const user = await User.findOne(id)
+    const user = await User.findOne(id);
     if (!user) {
-      throw Error('用户不存在')
+      throw Error('用户不存在');
     }
-    return user
+    return user;
   },
-}
+};

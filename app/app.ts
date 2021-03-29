@@ -1,47 +1,46 @@
-import http from 'http'
-import Koa from 'koa'
-import koaLogger from 'koa-logger'
-import KoaCompress from 'koa-compress'
-import KoaBody from 'koa-body'
+import http from 'http';
+import Koa from 'koa';
+import koaLogger from 'koa-logger';
+import KoaCompress from 'koa-compress';
+import KoaBody from 'koa-body';
 // import KoaMount from 'koa-mount'
-import KoaStatic from 'koa-static'
-import { createConnection } from 'typeorm'
-import config from './config'
-import * as Middlewares from './middlewares'
-import UserService from './services/user'
-import { SnakeCaseNamingStrategy } from './models/typeorm/naming_strategy'
+import KoaStatic from 'koa-static';
+import {createConnection} from 'typeorm';
+import config from './config';
+import * as Middlewares from './middlewares';
+import UserService from './services/user';
+import {SnakeCaseNamingStrategy} from './models/typeorm/naming_strategy';
 
-const app = new Koa()
-app.proxy = true // get public ip
+const app = new Koa();
+app.proxy = true; // get public ip
 if (process.env.NODE_ENV) {
-  app.env = process.env.NODE_ENV
+  app.env = process.env.NODE_ENV;
 }
 
-app.use(koaLogger())
+app.use(koaLogger());
 
 // Processing cross-domain
 app.use(async (ctx, next) => {
-
-  const requestOrigin = ctx.get('Origin')
-  ctx.vary('Orgin')
+  const requestOrigin = ctx.get('Origin');
+  ctx.vary('Orgin');
 
   if (!requestOrigin) {
-    await next()
-    return
+    await next();
+    return;
   }
 
-  ctx.set('Access-Control-Allow-Origin', requestOrigin)
-  ctx.set('Access-Control-Allow-Credentials', 'true')
-  ctx.set('Access-Control-Allow-Methods', 'OPTIONS, GET, PUT, POST, DELETE')
-  ctx.set('Access-Control-Allow-Headers', 'x-requested-with, accept, origin, content-type, authorization')
+  ctx.set('Access-Control-Allow-Origin', requestOrigin);
+  ctx.set('Access-Control-Allow-Credentials', 'true');
+  ctx.set('Access-Control-Allow-Methods', 'OPTIONS, GET, PUT, POST, DELETE');
+  ctx.set('Access-Control-Allow-Headers', 'x-requested-with, accept, origin, content-type, authorization');
 
   if (ctx.request.method === 'OPTIONS') {
-    ctx.status = 200
-    return
+    ctx.status = 200;
+    return;
   }
 
-  await next()
-})
+  await next();
+});
 
 createConnection({
   ...config.mysql,
@@ -61,10 +60,10 @@ createConnection({
 }).then(async () => {
   // here you can start to work with your entities
   // tslint:disable-next-line: no-console
-}).catch(error => console.log('TypeORM connection error: ' + error))
+}).catch((error) => console.log('TypeORM connection error: ' + error));
 
 // session & auth
-app.keys = ['koa-typescript-boilerplate']// session-secret
+app.keys = ['koa-typescript-boilerplate'];// session-secret
 app.use(Middlewares.passport(app, {
   sessionOptions: {
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 day
@@ -73,87 +72,91 @@ app.use(Middlewares.passport(app, {
     rolling: false,
   },
   serializeUserFn: async (user, done) => {
-    done(null, user.id)
+    done(null, user.id);
   },
   deserializeUserFn: async (id, done) => {
     try {
-      const user = await UserService.get(id)
-      done(null, user)
+      const user = await UserService.get(id);
+      done(null, user);
     } catch (err) {
-      done(err)
+      done(err);
     }
   },
-}))
+}));
 
 // Simple interface permission control
 app.use(async (ctx, next) => {
-  const authPath = [/^\/api\/user\/(?!logout)/]// 黑名单，需要登录权限
-  let needAuth = false
+  const authPath = [/^\/api\/user\/(?!logout)/];// 黑名单，需要登录权限
+  let needAuth = false;
   for (const reg of authPath) {
     if (typeof reg === 'string') {
       if (reg === ctx.path) {
-        needAuth = true
-        break
+        needAuth = true;
+        break;
       }
     } else {
       if (reg.test(ctx.path)) {
-        needAuth = true
+        needAuth = true;
       }
     }
   }
 
   if (!needAuth || ctx.isAuthenticated()) {
-    await next()
-    return
+    await next();
+    return;
   }
 
-  ctx.throw(403, '请登录')
-})
+  ctx.throw(403, '请登录');
+});
 
 // Compress
-app.use(KoaCompress())
+app.use(KoaCompress());
 
 // body parse
 app.use(KoaBody({
   multipart: true,
-}))
+}));
 
 // Standardized error output
 app.context.onerror = function(err: any) {
-  if (err == null) { return }
+  if (err == null) {
+    return;
+  }
 
   // ignore all pedding request stream
   if (this.req) {
-    const sendToWormhole = require('stream-wormhole')
-    sendToWormhole(this.req)
+    const sendToWormhole = require('stream-wormhole');
+    sendToWormhole(this.req);
   }
 
   // delegate
-  this.app.emit('error', err, this)
+  this.app.emit('error', err, this);
 
   // ENOENT support
-  if (err.code === 'ENOENT') { err.status = 404 }
+  if (err.code === 'ENOENT') {
+    err.status = 404;
+  }
 
   if (typeof err.status !== 'number' || !http.STATUS_CODES[err.status]) {
-    err.status = 500
+    err.status = 500;
   }
-  this.status = err.status
-  this.set({})
+  this.status = err.status;
+  this.set({});
 
-  this.type = 'json'
+  this.type = 'json';
   this.body = {
     error: err.message,
-  }
-  this.res.end(JSON.stringify(this.body))
-}
+  };
+  this.res.end(JSON.stringify(this.body));
+};
 
 // Register routers
-app.use(Middlewares.router.registerRoutes(__dirname + '/controllers'))
+app.use(Middlewares.router.registerRoutes(__dirname + '/controllers'));
 
 // Static resource access
-app.use(KoaStatic(__dirname + '/public'))
+app.use(KoaStatic(__dirname + '/public'));
 
 // Mount docs
 // app.use(KoaMount('/docs', KoaStatic('docs')))
 
-export default app
+export default app;
